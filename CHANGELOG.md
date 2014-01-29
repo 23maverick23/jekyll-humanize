@@ -1,5 +1,9 @@
 # jekyll-humanize Changelog
 
+## v1.0.1 (2014-01-29)
+
++ Fixed small type in gsub (proper escaping needed)
+
 ## v1.0.0 (2014-01-28)
 
 + Updated README.md with basic usage documentation

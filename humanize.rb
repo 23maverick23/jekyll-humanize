@@ -61,7 +61,7 @@ module Jekyll
       end
 
       copy = orig.strip
-      copy = orig.gsub(/^(-?\d+)(\d{3})/, "\1#{delimiter}\2")
+      copy = orig.gsub(/^(-?\d+)(\d{3})/, "\\1#{delimiter}\\2")
       orig == copy ? copy : intcomma(copy, delimiter)
     end
 
