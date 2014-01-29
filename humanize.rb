@@ -143,11 +143,11 @@ module Jekyll
       # will attempt to return the string representation in the format of today,
       # tomorrow, yesterday, "in # days" or "# days ago". Otherwise, returns a
       # string formatted according to the "date_format" setting in your
-      # _config.yml file using strftime format. If not defined, it will default
+      # _config.yml file using strftime format (if not defined, it will default
       # to "%m/%d/%Y").
       #
       # Usage:
-      # _today == 01/26/2014
+      # TODAY == 01/26/2014
       # {{ post.updated }} >>> 01/25/2014
       # {{ post.updated | naturalday }} >>> 'yesterday'
       # {{ post.date }} >>> 01/19/2014
@@ -155,7 +155,7 @@ module Jekyll
 
       begin
         site = @context.registers[:site]
-        date_format = site.config['date_format']
+        date_format = site.config['humanize']['date_format']
         date = time(date).to_date
       rescue Exception => e
         puts "#{e.class} #{e}"
