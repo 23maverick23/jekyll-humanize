@@ -16,7 +16,7 @@ module Jekyll
     #  PUBLIC METHODS  #
     ####################
 
-    def ordinal(value)
+    def ordinal(value, tag=nil)
       ##
       # Converts an integer to its ordinal as a string. 1 is '1st', 2 is '2nd',
       # 3 is '3rd', etc. Works for any integer.
@@ -24,6 +24,7 @@ module Jekyll
       # Usage:
       # {{ somenum }} >>> 3
       # {{ somenum | ordinal }} >>> '3rd'
+      # {{ somenum | ordinal:'sup' }} >>> '3<sup>rd</sup>'
 
       begin
         value = value.to_i
@@ -34,11 +35,16 @@ module Jekyll
 
       suffixes = ["th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"]
       unless [11, 12, 13].include? value % 100 then
-        return "#{value}%s" % suffixes[value % 10]
+        suffix = suffixes[value % 10]
       else
-        return "#{value}%s" % suffixes[0]
+        suffix = suffixes[0]
       end
 
+      if tag then
+        return "#{value}<#{tag}>#{suffix}</#{tag}>"
+      else
+        return "#{value}#{suffix}"
+      end
     end
 
     def intcomma(value, delimiter=",")
