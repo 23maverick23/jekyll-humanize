@@ -24,6 +24,7 @@ Converts an integer to its ordinal as a string. 1 is '1st', 2 is '2nd', 3 is '3r
 ```
 {{ somenum }} >>> 3
 {{ somenum | ordinal }} >>> '3rd'
+{{ somenum | ordinal:'sup' }} >>> '3<sup>rd</sup>'
 ```
 
 ### intcomma(_value_, _delimiter=","_)
