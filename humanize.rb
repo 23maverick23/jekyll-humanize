@@ -16,7 +16,7 @@ module Jekyll
     #  PUBLIC METHODS  #
     ####################
 
-    def ordinal(value)
+    def ordinal(value, flag=nil)
       ##
       # Converts an integer to its ordinal as a string. 1 is '1st', 2 is '2nd',
       # 3 is '3rd', etc. Works for any integer.
@@ -24,19 +24,28 @@ module Jekyll
       # Usage:
       # {{ somenum }} >>> 3
       # {{ somenum | ordinal }} >>> '3rd'
+      # {{ somenum | ordinal: "super" }} >>> '3<sup>rd</sup>'
 
       begin
         value = value.to_i
+        flag = flag.to_s.downcase!
       rescue Exception => e
         puts "#{e.class} #{e}"
         return value
       end
 
+      suffix = ""
       suffixes = ["th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"]
       unless [11, 12, 13].include? value % 100 then
-        return "#{value}%s" % suffixes[value % 10]
+        suffix = suffixes[value % 10]
       else
-        return "#{value}%s" % suffixes[0]
+        suffix = suffixes[0]
+      end
+
+      unless flag and flag == "super"
+        return "#{value}%s" % suffix
+      else
+        return "#{value}<sup>%s</sup>" % suffix
       end
 
     end
@@ -184,6 +193,42 @@ module Jekyll
         return "#{delta} days ago"
       else
         return date.strftime("#{date_format}")
+      end
+
+    end
+
+    def filesize(value)
+      ##
+      # For filesize values in bytes, returns the number rounded to 3
+      # decimal places with the correct suffix.
+      #
+      # Usage:
+      # {{ bytes }} >>> 123456789
+      # {{ bytes | filesize }} >>> 117.738 MB
+      filesize_tb = 1099511627776.0
+      filesize_gb = 1073741824.0
+      filesize_mb = 1048576.0
+      filesize_kb = 1024.0
+
+      begin
+        value = value.to_f
+      rescue Exception => e
+        puts "#{e.class} #{e}"
+        return value
+      end
+
+      if value >= filesize_tb
+        return "%s TB" % (value / filesize_tb).to_f.round(3)
+      elsif value >= filesize_gb
+        return "%s GB" % (value / filesize_gb).to_f.round(3)
+      elsif value >= filesize_mb
+        return "%s MB" % (value / filesize_mb).to_f.round(3)
+      elsif value >= filesize_kb
+        return "%s KB" % (value / filesize_kb).to_f.round(0)
+      elsif value == 1
+        return "1 byte"
+      else
+        return "%s bytes" % value.to_f.round(0)
       end
 
     end

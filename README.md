@@ -1,6 +1,6 @@
 # jekyll-humanize
 
-This is a port of the Django app `humanize` which adds a "human touch" to data. Each method represents a Fluid type filter that can be used in your Jekyll site templates. Given that Jekyll produces static sites, some of the original methods do not make logical sense to port (e.g. naturaltime).
+This began as a port of the Django app `humanize` which adds a "human touch" to data. Each method represents a Fluid type filter that can be used in your Jekyll site templates. Given that Jekyll produces static sites, some of the original methods do not make logical sense to port (e.g. naturaltime).
 
 ## Installation
 
@@ -17,20 +17,21 @@ humanize:
     date_format: "%m/%d/%Y"
 ```
 
-### ordinal(_value_)
+### ordinal(_value_, _flag="super"_)
 
-Converts an integer to its ordinal as a string. 1 is '1st', 2 is '2nd', 3 is '3rd', etc. Works for any integer.
+Converts an integer to its ordinal as a string. 1 is '1st', 2 is '2nd', 3 is '3rd', etc. Works for any integer. An optional flag can be added which puts the ordinal suffix in `<sup></sup>` tags.
 
-```
+```ruby
 {{ somenum }} >>> 3
 {{ somenum | ordinal }} >>> '3rd'
+{{ somenum | ordinal: "super" }} >>> '3<sup>rd</sup>'
 ```
 
 ### intcomma(_value_, _delimiter=","_)
 
 Converts an integer to a string containing commas every three digits. For example, 3000 becomes '3,000' and 45000 becomes '45,000'. Optionally supports a delimiter override for commas (if you wanted to use periods for European numerical separators).
 
-```
+```ruby
 {{ post.content | number_of_words }} >>> 12345
 {{ post.content | number_of_words | intcomma }} >>> '12,345'
 {{ post.content | number_of_words | intcomma: '.' }} >>> '12.345'
@@ -40,7 +41,7 @@ Converts an integer to a string containing commas every three digits. For exampl
 
 Converts a large integer to a friendly text representation. Works best for numbers over 1 million. For example, 1000000 becomes '1.0 million'. 1200000 becomes '1.2 million' and 1200000000 becomes '1.2 billion'.
 
-```
+```ruby
 {{ largenum }} >>> 1200000
 {{ largenum | intword }} >>> '1.2 million'
 ```
@@ -49,7 +50,7 @@ Converts a large integer to a friendly text representation. Works best for numbe
 
 For numbers 0-9, returns the number spelled out. Otherwise, returns the number. This follows the Associated Press style.
 
-```
+```ruby
 {{ num }} >>> 6
 {{ num | apnumber }} >>> 'six'
 ```
@@ -58,12 +59,21 @@ For numbers 0-9, returns the number spelled out. Otherwise, returns the number. 
 
 For date values that are within a 9 day stretch from present day, this will attempt to return the string representation in the format of today, tomorrow, yesterday, "in # days" or "# days ago". Otherwise, returns a string formatted according to the `date_format` setting in your `_config.yml` file using strftime format. If not defined, it will default to `%m/%d/%Y`.
 
-```
-TODAY == '01/26/2014'
+```ruby
+# TODAY == '01/26/2014'
 {{ post.updated }} >>> 01/25/2014
 {{ post.updated | naturalday }} >>> 'yesterday'
 {{ post.date }} >>> 01/19/2014
 {{ post.date | naturalday }} >>> 'seven days ago'
+```
+
+### filesize(_bytes_)
+
+For filesize values in bytes, returns the number rounded to 3 decimal places with the correct suffix.
+
+```ruby
+{{ bytes }} >>> 123456789
+{{ bytes | filesize }} >>> 117.738 MB
 ```
 
 ## License
@@ -77,9 +87,14 @@ All rights reserved.
 
 Source code for the original Django app can be viewed at [https://github.com/django/django][1].
 
+#### JS-humanize
+
+Filesize format forked from javascript to ruby from [https://github.com/milanvrekic/JS-humanize][3]
+
 ## Changelog
 
 [CHANGELOG](CHANGELOG.md)
 
 [1]: https://github.com/django/django
 [2]: http://www.ruby-doc.org/core-2.1.0/Time.html#method-i-strftime
+[3]: https://github.com/milanvrekic/JS-humanize
