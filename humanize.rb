@@ -28,7 +28,7 @@ module Jekyll
 
       begin
         value = value.to_i
-        flag = flag.to_s.downcase!
+        flag.to_s.downcase!
       rescue Exception => e
         puts "#{e.class} #{e}"
         return value
