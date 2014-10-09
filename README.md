@@ -95,6 +95,24 @@ Filesize format forked from javascript to ruby from [https://github.com/milanvre
 
 [CHANGELOG](CHANGELOG.md)
 
+Issues
+------
+
+[![Issue Stats](http://issuestats.com/github/23maverick23/jekyll-humanize/badge/issue?style=flat)](http://issuestats.com/github/23maverick23/jekyll-humanize)
+
+You can log issues from the menu at right, or by [clicking here](https://github.com/23maverick23/jekyll-humanize/issues). Curious about responsiveness? Check out our [Issue Stats](http://issuestats.com/github/23maverick23/jekyll-humanize)!
+
+Contribute
+----------
+
+[![Issue Stats](http://issuestats.com/github/23maverick23/jekyll-humanize/badge/pr?style=flat)](http://issuestats.com/github/23maverick23/jekyll-humanize)
+
+1. [Fork](https://github.com/23maverick23/jekyll-humanize/fork) this repo.
+2. Create a branch `git checkout -b my_feature`
+3. Commit your changes `git commit -am "Added Feature"`
+4. Push to the branch `git push origin my_feature`
+5. Open a [Pull Request](https://github.com/23maverick23/jekyll-humanize/pulls)
+
 [1]: https://github.com/django/django
 [2]: http://www.ruby-doc.org/core-2.1.0/Time.html#method-i-strftime
 [3]: https://github.com/milanvrekic/JS-humanize
